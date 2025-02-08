@@ -1,0 +1,35 @@
+When ListPicker1.AfterPicking do
+  call BluetoothClient1.Connect address ListPicker1.Selection
+
+When ButtonForward.Click do
+  call BluetoothClient1.SendText text "F"
+When ButtonBackward.Click do
+  call BluetoothClient1.SendText text "B"
+When ButtonLeft.Click do
+  call BluetoothClient1.SendText text "L"
+When ButtonRight.Click do
+  call BluetoothClient1.SendText text "R"
+When ButtonStop.Click do
+  call BluetoothClient1.SendText text "S"
+When ButtonClimb.Click do
+  call BluetoothClient1.SendText text "U"
+
+// Joystick Control
+When Canvas1.TouchDown do
+  if x < center then call BluetoothClient1.SendText text "L"
+  if x > center then call BluetoothClient1.SendText text "R"
+  if y < center then call BluetoothClient1.SendText text "F"
+  if y > center then call BluetoothClient1.SendText text "B"
+When Canvas1.TouchUp do
+  call BluetoothClient1.SendText text "S"
+
+// Voice Commands
+When ButtonVoice.Click do
+  call SpeechRecognizer1.GetText
+When SpeechRecognizer1.AfterGettingText do
+  if result = "forward" then call BluetoothClient1.SendText text "F"
+  if result = "backward" then call BluetoothClient1.SendText text "B"
+  if result = "left" then call BluetoothClient1.SendText text "L"
+  if result = "right" then call BluetoothClient1.SendText text "R"
+  if result = "stop" then call BluetoothClient1.SendText text "S"
+  if result = "climb" then call BluetoothClient1.SendText text "U"
